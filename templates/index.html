@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Passsave</title>
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+	<link rel="icon" href="{{ url_for('static', filename='icon.png') }}">
+</head>
+<body>
+	<style type="text/css">
+		@import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+		body{
+			background: #eee;
+			font-family: 'Work Sans', sans-serif;
+		}
+		.b1{
+			margin-bottom: 10px;
+		}
+		.sep{
+			background: none;
+			overflow: none;
+		}
+		.form-control{
+			display: initial;
+		}
+	</style>
+	<h1 style="text-align:center;font-weight: 600"><img src="{{ url_for('static', filename='icon.png') }}" width="70px" height="70px">welcome Password Saver</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="b1">
+					<a href="/add" class="btn btn-primary">+Add</a>
+				</div>
+				<table class="table" style="background:white;">
+					<thead class="thead-dark">
+						<tr>
+						  	<th scope="col">Type</th>
+						    <th scope="col">username/email</th>
+						    <th scope="col">password</th>
+						    <th scope="col">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+					{% for d in data %}
+						<tr>
+						   	<td><i class="{{d[1]}}" style="font-size: 25px;"></i></td>
+						    <td>{{d[2]}}</td>
+						    <td><input type="password" name="pass" value="{{d[3]}}" disabled="true" id="{{d[0]}}" class="form-control" style="width: 200px">&nbsp;
+						    	<i class="fas fa-eye" style="color:red" onclick="change({{d[0]}})" id="ey1{{d[0]}}"></i>
+						    	<i class="fas fa-eye-slash" style="color:red" onclick="change2({{d[0]}})" id="ey2{{d[0]}}" hidden></i>
+						    </td>
+						    <td>
+						    <a href="/del/{{d[0]}}"><i class="fas fa-trash"></i></a>
+						    &nbsp;&nbsp;
+						    <a href="#"><i class="far fa-edit"></i></a>
+						    </td>
+						</tr>
+					{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="https://kit.fontawesome.com/7d3b9aa084.js" crossorigin="anonymous"></script>
+<script type="text/javascript">
+	function change(uid,uid2){
+		const str="ey1"
+		const str2="ey2"
+		document.getElementById(uid).type = 'text';
+		document.getElementById(str.concat('', uid)).hidden = true;
+		document.getElementById(str2.concat('', uid)).hidden = false;
+	}
+	function change2(uid,uid2){
+		const str="ey1"
+		const str2="ey2"
+		document.getElementById(uid).type = 'password';
+		document.getElementById(str.concat('', uid)).hidden = false;
+		document.getElementById(str2.concat('', uid)).hidden = true;
+	}
+</script>
+</html>
